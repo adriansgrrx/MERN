@@ -2,10 +2,21 @@ import Note from "../models/Note.js"
 
 export async function getAllNotes(req, res) {
     try {
-        const notes = await Note.find();
+        const notes = await Note.find().sort({createdAt:-1});
         res.status(200).json(notes);
     } catch (error) {
         console.error("Error in getAllNotes", error);
+        res.status(500).json({message:"Internal server error"});
+    }
+}
+
+export async function getNote(req, res) {
+    try {
+        const note = await Note.findById(req.params.id);
+        if (!note) return res.status(404).json({message: "Note NOT FOUND."})
+        res.status(200).json(note);
+    } catch (error) {
+        console.error("Error in getNote", error);
         res.status(500).json({message:"Internal server error"});
     }
 }
