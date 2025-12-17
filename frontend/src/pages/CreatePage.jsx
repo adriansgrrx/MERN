@@ -41,8 +41,17 @@ const CreatePage = () => {
       toast.success("Note created successfully!");
       navigate("/");
     } catch (error) {
-      console.log("Failed to create note.", error)
-      toast.error("Failed to create note.")
+      if(error.response.status === 429){
+        console.log("Failed to create note.", error)
+        toast.error("Slow down! You're creating notes too fast.",
+          {
+            duration:4000,
+            icon: "🚦"
+        });
+      } else {
+        console.log("Failed to create note.", error)
+        toast.error("Failed to create note.")
+      }
     } finally {
       setLoading(false);
     }
