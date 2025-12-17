@@ -1,6 +1,8 @@
 import express from "express"
-import noteRoutes from "./routes/notesRoutes.js"
+import cors from 'cors'
 import { connectDB } from "./config/db.js";
+
+import noteRoutes from "./routes/notesRoutes.js"
 import dotenv from "dotenv";
 import rateLimiter from "../middleware/rateLimitter.js";
 
@@ -10,6 +12,9 @@ const app = express()
 const PORT = process.env.PORT || 5001
 
 app.use(express.json());
+app.use(cors({
+    origin: "http://localhost:5173",
+}));
 app.use(rateLimiter);
 
 app.use("/api/notes", noteRoutes);
