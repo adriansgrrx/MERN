@@ -10,7 +10,7 @@ const NavBar = () => {
                     <h1 className='text-3xl font-bold text-primary font-mono tracking-tighter'>
                         LangNote
                     </h1>
-                    <Link to={"/create"} className='btn btn-primary text-lg text-amber-50 font-medium font-mono gap-2 tracking-wide'>
+                    <Link to={"/create"} className='btn btn-primary text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide'>
                         <span>New Note</span>
                         <Plus className='size-5'/>
                     </Link>

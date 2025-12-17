@@ -1,13 +1,52 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { ArrowLeftIcon } from 'lucide-react';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const CreatePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {};
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(title.length < 8);
+    console.log(content);
+
+    if(!title.trim() || !content.trim()){
+      toast.error("All fields are required.");
+      return;
+    } 
+
+    if(title.length < 8){
+      toast.error("Your note title is too short.");
+      return;
+    } 
+
+    if(content.length < 10){
+      toast.error("Your note content is too short.");
+      return;
+    } 
+
+    setLoading(true);
+    try {
+      await axios.post("http://localhost:5001/api/notes/",
+        {
+          title,
+          content
+      })
+      toast.success("Note created successfully!");
+      navigate("/");
+    } catch (error) {
+      console.log("Failed to create note.", error)
+      toast.error("Failed to create note.")
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className='min-h-screen bg-base-200'>
@@ -46,7 +85,7 @@ const CreatePage = () => {
                 </div>
 
                 <div className='card-actions justify-end'>
-                  <button className='btn btn-primary' disabled={loading}>
+                  <button className='btn btn-primary text-amber-100' disabled={loading}>
                     {loading ? 'Creating...' : 'Create Note'}
                   </button>
                 </div>
