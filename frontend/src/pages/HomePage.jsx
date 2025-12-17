@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import RateLimitedUI from '../components/RateLimitedUI';
 import NoteCard from '../components/NoteCard';
-import axios from 'axios';
+import api from '../lib/axios.js'
 import toast from 'react-hot-toast';
+import { Link } from 'react-router';
+import { Plus } from 'lucide-react';
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -13,7 +15,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNotes = async () => {
         try {
-          const res = await axios.get("http://localhost:5001/api/notes");
+          const res = await api.get("/notes");
           console.log(res.data);
           setNotes(res.data);
           setIsRateLimited(false);
@@ -48,12 +50,16 @@ const HomePage = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
               {notes.map(note => (
                 <div>
-                  <NoteCard key={note._id} note={note}/>
+                  <NoteCard key={note._id} note={note} setNotes={setNotes}/>
                 </div>
               ))}
             </div>
           )
         }
+
+        {notes.length === 0 && (
+          <div className='text-center text-accent font-mono'><p>Add notes by clicking <strong>New Note</strong></p></div>
+        )}
       </div>
     </div>
   )

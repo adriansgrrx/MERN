@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router';
 import { ArrowLeftIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
-import axios from 'axios';
+import api from '../lib/axios';
 
 const CreatePage = () => {
   const [title, setTitle] = useState("");
@@ -13,7 +13,7 @@ const CreatePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(title.length < 8);
+    console.log(title);
     console.log(content);
 
     if(!title.trim() || !content.trim()){
@@ -33,7 +33,7 @@ const CreatePage = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5001/api/notes/",
+      await api.post("/notes",
         {
           title,
           content
@@ -41,17 +41,17 @@ const CreatePage = () => {
       toast.success("Note created successfully!");
       navigate("/");
     } catch (error) {
-      if(error.response.status === 429){
-        console.log("Failed to create note.", error)
+      if(error.response?.status === 429){
+        console.log("Failed to create note.", error);
         toast.error("Slow down! You're creating notes too fast.",
           {
-            duration:4000,
+            duration: 4000,
             icon: "🚦"
         });
       } else {
-        console.log("Failed to create note.", error)
-        toast.error("Failed to create note.")
-      }
+        console.log("Failed to create note.", error);
+        toast.error("Failed to create note.");
+      };
     } finally {
       setLoading(false);
     }

@@ -64,6 +64,8 @@ export async function deleteNote(req, res) {
         );
         if (!deletedNote) return res.status(404).json({message: "Note NOT FOUND."});
         res.status(200).json({message: "Note DELETED successfully."});
+        console.log("Deleting note with ID:", req.params.id);
+
     } catch (error) {
         console.error("Error in deleteNote", error);
         res.status(500).json({message:"Internal server error"});
