@@ -50,7 +50,24 @@ const NoteDetailsPage = () => {
     }
   };
 
-  const handleSave = async() => {};
+  const handleSave = async() => {
+    if(!note.title.trim() || !note.content.trim()){
+      toast.error("Please add a title or content")
+      return;
+    }
+
+    setSaving(true)
+
+    try {
+      await api.put(`/notes/${id}`, note);
+      toast.success("Note updated successfully");
+    } catch (error) {
+      toast.error("Failed to update note");
+      console.log("Error updating note", error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   if(loading) {
     return (
@@ -86,7 +103,7 @@ const NoteDetailsPage = () => {
                   placeholder='Note Title'
                   className='input input-bordered'
                   value={note.title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => setNote({...note, title: e.target.value})}
                   />
                 </div>
                 <div className='form-control mb-4'>
@@ -97,7 +114,7 @@ const NoteDetailsPage = () => {
                   placeholder='Write your note here...'
                   className='textarea textarea-bordered h-32'
                   value={note.content}
-                  onChange={(e) => setContent(e.target.value)}
+                  onChange={(e) => setNote({...note, content: e.target.value})}
                   />
                 </div>
 
