@@ -6,6 +6,7 @@ import api from '../lib/axios.js'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import { Plus } from 'lucide-react';
+import NotesNotFound from '../components/NotesNotFound.jsx';
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -57,9 +58,10 @@ const HomePage = () => {
           )
         }
 
-        {notes.length === 0 && (
-          <div className='text-center text-accent font-mono'><p>Add notes by clicking <strong>New Note</strong></p></div>
-        )}
+        {notes.length === 0 
+        && !isRateLimited
+        && !loading
+        && <NotesNotFound />}
       </div>
     </div>
   )
