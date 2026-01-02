@@ -5,7 +5,7 @@ import NoteCard from '../components/NoteCard';
 import api from '../lib/axios.js'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
-import { Plus } from 'lucide-react';
+import { LoaderIcon } from 'lucide-react';
 import NotesNotFound from '../components/NotesNotFound.jsx';
 
 const HomePage = () => {
@@ -42,7 +42,11 @@ const HomePage = () => {
       {isRateLimited && <RateLimitedUI />}
 
       <div className='max-w-6xl mx-auto p-4 mt-6'>
-        {loading && <div className='text-center text-primary font-mono'>Loading LangNotes...</div>}
+        {loading && 
+        <div className='flex items-center justify-center'>
+          <LoaderIcon className='animate-spin size-5'/>
+        </div>
+        }
 
         {
           notes.length > 0 
