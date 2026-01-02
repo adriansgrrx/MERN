@@ -8,8 +8,7 @@ import toast from 'react-hot-toast'
 
 const App = () => {
   return (
-    <div data-theme='retro' className='relative h-full w-full'>
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div data-theme='retro'>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create" element={<CreatePage />} />
