@@ -62,6 +62,7 @@ const HomePage = () => {
         && !isRateLimited
         && !loading
         && <NotesNotFound />}
+        
       </div>
     </div>
   )
