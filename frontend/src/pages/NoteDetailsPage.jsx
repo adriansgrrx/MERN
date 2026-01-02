@@ -10,42 +10,10 @@ const NoteDetailsPage = () => {
   const [saving, setSaving] = useState(false);
 
   const navigate = useNavigate();
-
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    console.log(title);
-    console.log(content);
-
-    setLoading(true);
-    try {
-      await api.post("/notes",
-        {
-          title,
-          content
-      })
-      toast.success("Note created successfully!");
-      navigate("/");
-    } catch (error) {
-      if(error.response?.status === 429){
-        console.log("Failed to create note.", error);
-        toast.error("Slow down! You're creating notes too fast.",
-          {
-            duration: 4000,
-            icon: "🚦"
-        });
-      } else {
-        console.log("Failed to create note.", error);
-        toast.error("Failed to create note.");
-      };
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSave = async() => {};
-
+  
   const {id} = useParams();
   console.log({id});
+
 
   useEffect(() => {
     const fetchNote= async() => {
@@ -64,6 +32,25 @@ const NoteDetailsPage = () => {
   }, [id])
 
   console.log( {note} ) 
+
+  const handleDelete = async () => {
+    // e.preventDefault();
+
+    if(!window.confirm("Are you sure you want to delete this note?")) return;
+
+    try {
+        await api.delete(`/notes/${id}`); 
+        // setNotes((prev) => prev.filter(note => note._id !== id));
+        toast.success("Note deleted successfully.");
+        navigate("/");
+
+    } catch (error) {
+        console.log("Failed to delete note", error);
+        toast.error("Failed to delete the note.");
+    }
+  };
+
+  const handleSave = async() => {};
 
   if(loading) {
     return (
@@ -91,7 +78,6 @@ const NoteDetailsPage = () => {
           <div className='card bg-base-100'>
             <div className='card-body'>
               {/* <div className='card-title text-2xl'>Create a New Note</div> */}
-              <form onSubmit={handleDelete}>
                 <div className='form-control mb-4'>
                   <label className='label'>
                     <span className='label-text'>Title</span>
@@ -119,9 +105,7 @@ const NoteDetailsPage = () => {
                   <button className='btn btn-primary text-amber-100' disabled={saving} onClick={handleSave}>
                     {saving ? 'Save...' : 'Save Changes'}
                   </button>
-                </div>
-              </form>
-              
+                </div>             
 
             </div>
           </div>
