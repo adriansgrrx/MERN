@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import NavBar from '../components/NavBar'
-import RateLimitedUI from '../components/RateLimitedUI';
-import NoteCard from '../components/NoteCard';
+import NavBar from '../components/NavBar.jsx'
+import RateLimitedUI from '../components/RateLimitedUI.jsx';
+import NoteCard from '../components/NoteCard.jsx';
 import api from '../lib/axios.js'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
