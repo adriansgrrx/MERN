@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import {Plus} from 'lucide-react'
 
-const NavBar = () => {
+const Navbar = () => {
     return (
         <header className='bg-base-100 border-base-content/10'>
             <div className='mx-auto max-w-6xl px-4 py-4'>
@@ -24,4 +24,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar
+export default Navbar
