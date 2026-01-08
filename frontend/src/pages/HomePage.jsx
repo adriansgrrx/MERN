@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import NavBar from 'frontend/src/components/NavBar.jsx'
-import RateLimitedUI from 'frontend/src/components/RateLimitedUI.jsx';
-import NoteCard from 'frontend/src/components/NoteCard.jsx';
+import NavBar from '../components/NavBar.jsx'
+import RateLimitedUI from '../components/RateLimitedUI.jsx';
+import NoteCard from '../components/NoteCard.jsx';
 import api from '../lib/axios.js'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router';
 import { LoaderIcon } from 'lucide-react';
-import NotesNotFound from 'frontend/src/components/NotesNotFound.jsx';
+import NotesNotFound from '../components/NotesNotFound.jsx';
 
 const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
