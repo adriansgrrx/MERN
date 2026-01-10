@@ -1,74 +1,64 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import api from "../lib/axios";
+import toast from "react-hot-toast";
 
-function CreateAccount() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+function CreateAccount({ setUser }) {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(title);
-    console.log(content);
-
-    if (!title.trim() || !content.trim()) {
-      toast.error("All fields are required.");
-      return;
-    }
-
-    if (title.length < 8) {
-      toast.error("Your note title is too short.");
-      return;
-    }
-
-    if (content.length < 10) {
-      toast.error("Your note content is too short.");
-      return;
-    }
-
     setLoading(true);
+
     try {
-      await api.post("/notes", {
-        title,
-        content,
-      });
-      toast.success("Note created successfully!");
+      const res = await api.post("/users/register", formData);
+
+      localStorage.setItem("token", res.data.token);
+      setUser(res.data.user);
+
+      toast.success("Welcome to LangNote!");
       navigate("/");
     } catch (error) {
-      if (error.response?.status === 429) {
-        console.log("Failed to create note.", error);
-        toast.error("Slow down! You're creating notes too fast.", {
-          duration: 4000,
-          icon: "🚦",
-        });
-      } else {
-        console.log("Failed to create note.", error);
-        toast.error("Failed to create note.");
-      }
+      console.log("Register error:", error.response?.data);
+
+      toast.error(error.response?.data?.message || "Failed to create account.");
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-lg mx-auto">
           <div className="card bg-base-100 font-mono">
             <div className="card-body">
-              <div className="card-title text-2xl mt-4 mb-4 justify-center">Create Account</div>
+              <div className="card-title text-2xl mt-4 mb-4 justify-center">
+                Create Account
+              </div>
               <form onSubmit={handleSubmit}>
                 <div className="form-control mb-4">
                   <label className="label">
                     <span className="label-text">Username</span>
                   </label>
                   <input
-                    type="text"
+                    type="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
                     placeholder="ex: vlitz03"
                     className="input input-bordered"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
                     required
                   />
                 </div>
@@ -78,10 +68,11 @@ function CreateAccount() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="ex: vltiz@example.com"
                     className="input input-bordered"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
                     required
                   />
                 </div>
@@ -91,10 +82,11 @@ function CreateAccount() {
                   </label>
                   <input
                     type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                     placeholder="Your password"
                     className="input input-bordered"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
                     required
                   />
                 </div>

@@ -34,9 +34,9 @@ const App = () => {
   return (
     <div data-theme="retro">
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage user={user} error={error} />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/register" element={<CreateAccount />} />
+        <Route path="/register" element={<CreateAccount setUser={setUser} />} />
         <Route path="/create" element={<CreatePage />} />
         <Route path="/note/:id" element={<NoteDetailsPage />} />
       </Routes>

@@ -23,7 +23,7 @@ function Login({setUser}) {
     try {
       const res = await api.post("/users/login", formData);
       localStorage.setItem("token", res.data.token);
-      // toast.success("Note created successfully!");
+      toast.success("Welcome back!");
       setUser(res.data);
       navigate("/");
     } catch (error) {
@@ -63,6 +63,7 @@ function Login({setUser}) {
                     placeholder="ex: vltiz@example.com"
                     className="input input-bordered"
                     required
+                    autoComplete="off"
                   />
                 </div>
                 <div className="form-control mb-4">
@@ -77,6 +78,7 @@ function Login({setUser}) {
                     placeholder="Your password"
                     className="input input-bordered"
                     required
+                    autoComplete="off"
                   />
                 </div>
 
