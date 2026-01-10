@@ -2,7 +2,9 @@ import express from "express"
 import cors from 'cors'
 import { connectDB } from "./config/db.js";
 
-import noteRoutes from "./routes/notesRoutes.js"
+import noteRoutes from "./routes/notesRoutes.js";
+import authRoutes from "./routes/auth.js"
+
 import dotenv from "dotenv";
 import rateLimiter from "../middleware/rateLimitter.js";
 
@@ -25,6 +27,7 @@ app.use(express.json());
 app.use(rateLimiter);
 
 app.use("/api/notes", noteRoutes);
+app.use("/api/users", authRoutes);
 
 if(process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
