@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <div data-theme="retro">
       <Routes>
-        <Route path="/" element={<HomePage user={user} error={error} />} />
+        <Route path="/" element={<HomePage user={user} setUser={setUser} error={error} />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/register" element={<CreateAccount setUser={setUser} />} />
         <Route path="/create" element={<CreatePage />} />

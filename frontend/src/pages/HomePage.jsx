@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar.jsx";
+import Navbar from "../components/NavBar.jsx";
 import RateLimitedUI from "../components/RateLimitedUI.jsx";
 import NoteCard from "../components/NoteCard.jsx";
 import api from "../lib/axios.js";
@@ -8,10 +8,11 @@ import { Link } from "react-router";
 import { LoaderIcon } from "lucide-react";
 import NotesNotFound from "../components/NotesNotFound.jsx";
 
-const HomePage = ({ user, error }) => {
+const HomePage = ({ user, error, setUser }) => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  // console.log(user);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -37,21 +38,21 @@ const HomePage = ({ user, error }) => {
 
   return (
     <div className="min-h-screen">
-      <Navbar user={user} />
+      <Navbar user={user} setUser={setUser} />
 
       {isRateLimited && <RateLimitedUI />}
 
       {error && <p>{error}</p>}
 
+      {loading && (
+        <div className="flex items-center justify-center">
+          <LoaderIcon className="animate-spin size-5" />
+        </div>
+      )}
+
       {user ? (
         <div className="max-w-6xl mx-auto p-4 mt-6">
           {/* welcome, {user.username}, {user.email} */}
-          {loading && (
-            <div className="flex items-center justify-center">
-              <LoaderIcon className="animate-spin size-5" />
-            </div>
-          )}
-
           {notes.length > 0 && !isRateLimited && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {notes.map((note) => (
@@ -61,9 +62,8 @@ const HomePage = ({ user, error }) => {
               ))}
             </div>
           )}
-
           {notes.length === 0 && !isRateLimited && !loading && (
-            <NotesNotFound />
+            <NotesNotFound username={user.username}/>
           )}
         </div>
       ) : (

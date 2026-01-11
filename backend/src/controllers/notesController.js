@@ -2,72 +2,93 @@ import Note from "../models/Note.js"
 
 export async function getAllNotes(req, res) {
     try {
-        const notes = await Note.find().sort({createdAt:-1});
-        res.status(200).json(notes);
+    const notes = await Note.find({ user: req.user._id })
+    .sort({ createdAt: -1 });
+
+    res.status(200).json(notes);
     } catch (error) {
         console.error("Error in getAllNotes", error);
-        res.status(500).json({message:"Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
 export async function getNote(req, res) {
     try {
-        const note = await Note.findById(req.params.id);
-        if (!note) return res.status(404).json({message: "Note NOT FOUND."})
-        res.status(200).json(note);
+    const note = await Note.findById(req.params.id);
+
+    if (!note) {
+        return res.status(404).json({ message: "Note NOT FOUND." });
+    }
+
+    if (note.user.toString() !== req.user._id.toString()) {
+        return res.status(403).json({ message: "Not authorized" });
+    }
+
+    res.status(200).json(note);
     } catch (error) {
         console.error("Error in getNote", error);
-        res.status(500).json({message:"Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
 export async function createNote(req, res) {
     try {
-        const {title, content} = req.body;
-        const savedNote = new Note({title, content});
+    const { title, content } = req.body;
 
-        await savedNote.save();
-        res.status(201).json(savedNote);
+    const savedNote = new Note({
+        title,
+        content,
+        user: req.user._id,
+    });
+
+    await savedNote.save();
+    res.status(201).json(savedNote);
     } catch (error) {
         console.error("Error in createNote", error);
-        res.status(500).json({message:"Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
 export async function updateNote(req, res) {
     try {
-        const {title, content} = req.body;
-        const updatedNote = await Note.findByIdAndUpdate(
-            req.params.id, 
-            {title, content}, 
-            {
-                new: true
-            }
-        );
-        if (!updatedNote) return res.status(404).json({message: "Note NOT FOUND."});
-        res.status(200).json(updatedNote);
+    const note = await Note.findById(req.params.id);
+
+    if (!note) {
+        return res.status(404).json({ message: "Note NOT FOUND." });
+    }
+
+    if (note.user.toString() !== req.user._id.toString()) {
+        return res.status(403).json({ message: "Not authorized" });
+    }
+
+    note.title = req.body.title || note.title;
+    note.content = req.body.content || note.content;
+
+    const updatedNote = await note.save();
+    res.status(200).json(updatedNote);
     } catch (error) {
         console.error("Error in updateNote", error);
-        res.status(500).json({message:"Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
+
 export async function deleteNote(req, res) {
     try {
-        const {title, content} = req.body;
-        const deletedNote = await Note.findByIdAndDelete(
-            req.params.id, 
-            {title, content}, 
-            {
-                new: true
-            }
-        );
-        if (!deletedNote) return res.status(404).json({message: "Note NOT FOUND."});
-        res.status(200).json({message: "Note DELETED successfully."});
-        console.log("Deleting note with ID:", req.params.id);
+        const note = await Note.findById(req.params.id);
 
+        if (!note) {
+            return res.status(404).json({ message: "Note NOT FOUND." });
+        }
+
+        if (note.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: "Not authorized" });
+        }
+
+        await note.deleteOne();
+        res.status(200).json({ message: "Note DELETED successfully." });
     } catch (error) {
         console.error("Error in deleteNote", error);
-        res.status(500).json({message:"Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
