@@ -72,7 +72,6 @@ const Navbar = ({ user, setUser }) => {
               className="btn btn-primary text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide"
             >
               <span>Get Started</span>
-              <Plus className="size-5" />
             </Link>
           )}
         </div>

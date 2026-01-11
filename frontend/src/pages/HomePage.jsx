@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUI.jsx";
 import NoteCard from "../components/NoteCard.jsx";
+import NotesNotFound from "../components/NotesNotFound.jsx";
+import GetStarted from "../components/GetStarted.jsx";
 import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
 import { LoaderIcon } from "lucide-react";
-import NotesNotFound from "../components/NotesNotFound.jsx";
 
 const HomePage = ({ user, error, setUser }) => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -65,8 +66,8 @@ const HomePage = ({ user, error, setUser }) => {
           )}
         </div>
       ) : (
-        <div className="flex items-center justify-center">
-          Login or create account
+        <div className="max-w-6xl mx-auto p-4 mt-6">
+          <GetStarted />
         </div>
       )}
     </div>
