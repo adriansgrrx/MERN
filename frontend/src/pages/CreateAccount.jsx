@@ -18,7 +18,7 @@ function CreateAccount({ setUser }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-// CreateAccount.jsx
+  // CreateAccount.jsx
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,7 +36,7 @@ function CreateAccount({ setUser }) {
       // 3️⃣ Navigate to homepage
       toast("Welcome to LangNote!", {
         icon: "📝",
-        duration: 4000
+        duration: 4000,
       });
       navigate("/");
     } catch (error) {
@@ -45,7 +45,6 @@ function CreateAccount({ setUser }) {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center">
@@ -100,12 +99,12 @@ function CreateAccount({ setUser }) {
                   />
                 </div>
 
-                <div className="flex text-sm items-center justify-center mt-8">
-                  <p>Already have an account?</p>
-                  <Link to={"/login"} className="text-error">
+                <p className="text-center text-sm mt-8">
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-error font-medium">
                     Log in
                   </Link>
-                </div>
+                </p>
 
                 <div className="card-actions justify-end">
                   <button

@@ -83,10 +83,12 @@ function Login({ setUser }) {
                   />
                 </div>
 
-                <div className="flex text-sm items-center justify-center mt-8">
-                  <p>No account yet?</p>
-                  <Link to={'/register'} className="text-error">Create account</Link>
-                </div>
+                <p className="text-center text-sm mt-8">
+                  No account yet?{" "}
+                  <Link to={'/register'} className="text-error">
+                    Create account
+                  </Link>
+                </p>
 
                 <div className="card-actions">
                   <button
