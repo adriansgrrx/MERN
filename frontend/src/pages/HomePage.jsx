@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/NavBar.jsx";
+import Navbar from "../components/Navbar.jsx";
 import RateLimitedUI from "../components/RateLimitedUI.jsx";
 import NoteCard from "../components/NoteCard.jsx";
 import api from "../lib/axios.js";
@@ -63,7 +63,7 @@ const HomePage = ({ user, error, setUser }) => {
             </div>
           )}
           {notes.length === 0 && !isRateLimited && !loading && (
-            <NotesNotFound username={user.username}/>
+            <NotesNotFound username={user.username} />
           )}
         </div>
       ) : (

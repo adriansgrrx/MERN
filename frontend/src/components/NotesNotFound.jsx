@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { NotebookIcon } from "lucide-react";
+import { formatUsername } from "../lib/utils";
 
 const NotesNotFound = ({ username }) => {
     return (
@@ -10,8 +11,8 @@ const NotesNotFound = ({ username }) => {
         </div>
         <h3 className="text-2xl font-bold">No notes yet</h3>
         <p className="text-base-content/70">
-            Hi, {username.toUpperCase()}! You don't have any notes yet. Create your
-            first note to get started.
+            Hi, {formatUsername(username)}! You don't have any notes yet. Create
+            your first note to get started.
         </p>
         <Link
             to="/create"
