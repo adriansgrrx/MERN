@@ -37,7 +37,7 @@ const HomePage = ({ user, error }) => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <Navbar user={user} />
 
       {isRateLimited && <RateLimitedUI />}
 
@@ -45,8 +45,8 @@ const HomePage = ({ user, error }) => {
 
       {user ? (
         <div className="max-w-6xl mx-auto p-4 mt-6">
-          welcome, {user.username}, {user.email}
-          {/* {loading && (
+          {/* welcome, {user.username}, {user.email} */}
+          {loading && (
             <div className="flex items-center justify-center">
               <LoaderIcon className="animate-spin size-5" />
             </div>
@@ -64,10 +64,10 @@ const HomePage = ({ user, error }) => {
 
           {notes.length === 0 && !isRateLimited && !loading && (
             <NotesNotFound />
-          )} */}
+          )}
         </div>
       ) : (
-        <div>
+        <div className="flex items-center justify-center">
           Login or create account
         </div>
       )}

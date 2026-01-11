@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router";
 
 function CreateAccount({ setUser }) {
   const [formData, setFormData] = useState({
@@ -89,6 +90,13 @@ function CreateAccount({ setUser }) {
                     className="input input-bordered"
                     required
                   />
+                </div>
+
+                <div className="flex text-sm items-center justify-center mt-8">
+                  <p>Already have an account?</p>
+                  <Link to={"/login"} className="text-error">
+                    Log in
+                  </Link>
                 </div>
 
                 <div className="card-actions justify-end">

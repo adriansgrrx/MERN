@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import api from "../lib/axios";
+import { Link } from "react-router";
 
-function Login({setUser}) {
+function Login({ setUser }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -82,7 +83,12 @@ function Login({setUser}) {
                   />
                 </div>
 
-                <div className="card-actions justify-end">
+                <div className="flex text-sm items-center justify-center mt-8">
+                  <p>No account yet?</p>
+                  <Link to={'/register'} className="text-error">Create account</Link>
+                </div>
+
+                <div className="card-actions">
                   <button
                     className="btn btn-primary text-amber-100 w-full mt-4"
                     disabled={loading}

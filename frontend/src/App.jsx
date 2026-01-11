@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const [user, setUser] = useState(null);
