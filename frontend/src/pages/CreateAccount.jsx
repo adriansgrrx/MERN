@@ -18,6 +18,7 @@ function CreateAccount({ setUser }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+// CreateAccount.jsx
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -25,19 +26,26 @@ function CreateAccount({ setUser }) {
     try {
       const res = await api.post("/users/register", formData);
 
+      // 1️⃣ Store token
       localStorage.setItem("token", res.data.token);
-      setUser(res.data.user);
 
-      toast.success("Welcome to LangNote!");
+      // 2️⃣ Fetch full user profile (optional but safest)
+      const userRes = await api.get("/users/me"); // token is auto-attached via interceptor
+      setUser(userRes.data);
+
+      // 3️⃣ Navigate to homepage
+      toast("Welcome to LangNote!", {
+        icon: "📝",
+        duration: 4000
+      });
       navigate("/");
     } catch (error) {
-      console.log("Register error:", error.response?.data);
-
       toast.error(error.response?.data?.message || "Failed to create account.");
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center">

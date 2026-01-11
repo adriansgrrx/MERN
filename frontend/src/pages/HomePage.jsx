@@ -25,8 +25,6 @@ const HomePage = ({ user, error, setUser }) => {
         console.log("Error fetching notes.", error);
         if (error.response.status == 429) {
           setIsRateLimited(true);
-        } else {
-          toast.error("Failed to load notes.");
         }
       } finally {
         setLoading(false);
@@ -45,8 +43,8 @@ const HomePage = ({ user, error, setUser }) => {
       {error && <p>{error}</p>}
 
       {loading && (
-        <div className="flex items-center justify-center">
-          <LoaderIcon className="animate-spin size-5" />
+        <div className="max-w-6xl mx-auto flex items-center justify-center text-primary">
+          <span class="loading loading-dots loading-lg"></span>
         </div>
       )}
 
