@@ -15,12 +15,12 @@ const GetStarted = () => {
                 account.
                 <br />
             </p>
-            <Link
+            {/* <Link
                     to="/register"
                     className="btn btn-primary btn-md text-sm md:text-md text-amber-100 font-medium font-mono gap-2 tracking-wide"
                 >
                     Create Your First Note
-            </Link>
+            </Link> */}
         </div>
     );
 };
