@@ -18,8 +18,8 @@ const Navbar = ({ user, setUser }) => {
       <div className="mx-auto max-w-6xl px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex gap-2">
-            <img src="/assets/langnote.png" alt="logo" className="h-9 w-9" />
-            <h1 className="text-3xl font-bold text-primary font-mono tracking-tighter">
+            <img src="/assets/langnote.png" alt="logo" className="size-8 md:size-9 lg:size-9 xl:size-9" />
+            <h1 className="text-2xl md:text-3xl lg:text-3xl xl:text-3xl font-bold text-primary font-mono tracking-tighter">
               LangNote
             </h1>
           </div>
@@ -28,7 +28,7 @@ const Navbar = ({ user, setUser }) => {
             <div className="flex items-center gap-3">
               <Link
                 to="/create"
-                className="btn btn-primary text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide"
+                className="btn btn-primary btn-sm md:btn-md lg:btn-md xl:btn-md text-sm md:text-lg lg:text-lg xl:text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide"
               >
                 <span>New Note</span>
                 <Plus className="size-5" />
@@ -40,8 +40,8 @@ const Navbar = ({ user, setUser }) => {
                   tabIndex={0}
                   className="avatar online placeholder cursor-pointer"
                 >
-                  <div className="bg-neutral text-neutral-content w-12 rounded-full">
-                    <span className="text-lg">
+                  <div className="bg-neutral text-neutral-content size-8 md:size-12 lg:size-12 xl:size-12 rounded-full">
+                    <span className="text-sm lg:text-lg xl:text-lg">
                       {user.username?.slice(0, 2).toUpperCase()}
                     </span>
                   </div>
@@ -57,9 +57,9 @@ const Navbar = ({ user, setUser }) => {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="btn btn-primary flex items-center gap-2"
+                      className="btn btn-primary btn-sm text-sm text-amber-100 flex items-center gap-2 "
                     >
-                      <LogOut className="size-4" />
+                      <LogOut className="size-3" />
                       Logout
                     </button>
                   </li>
@@ -69,7 +69,7 @@ const Navbar = ({ user, setUser }) => {
           ) : (
             <Link
               to="/register"
-              className="btn btn-primary text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide"
+              className="btn btn-primary btn-sm md:btn-md lg:btn-md xl:btn-md text-sm md:text-lg lg:text-lg xl:text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide"
             >
               <span>Get Started</span>
             </Link>

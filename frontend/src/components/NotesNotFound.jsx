@@ -5,7 +5,7 @@ import { formatUsername } from "../lib/utils";
 
 const NotesNotFound = ({ username }) => {
     return (
-        <div className="flex flex-col items-center justify-center py-16 space-y-6 max-w-md mx-auto text-center font-mono">
+        <div className="flex flex-col items-center justify-center py-16 space-y-6 max-w-xs lg:max-w-md xl:max-w-md mx-auto text-center font-mono">
             <div className="bg-primary/10 rounded-full p-8">
                 <NotebookIcon className="size-10 text-primary" />
             </div>
@@ -16,7 +16,7 @@ const NotesNotFound = ({ username }) => {
             </p>
             <Link
                 to="/create"
-                className="btn btn-primary text-lg text-amber-100 font-medium font-mono gap-2 tracking-wide"
+                className="btn btn-sm md:btn-md lg:btn-md xl:btn-md btn-primary text-sm md:text-md text-amber-100 font-medium font-mono gap-2 tracking-wide"
             >
                 Create Your First Note
             </Link>

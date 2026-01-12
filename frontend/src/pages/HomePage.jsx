@@ -7,7 +7,7 @@ import GetStarted from "../components/GetStarted.jsx";
 import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
-import { LoaderIcon } from "lucide-react";
+import { Loader, LoaderIcon } from "lucide-react";
 
 const HomePage = ({ user, error, setUser }) => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -43,11 +43,11 @@ const HomePage = ({ user, error, setUser }) => {
 
       {error && <p>{error}</p>}
 
-      {loading && (
+      {/* {loading && (
         <div className="max-w-6xl mx-auto flex items-center justify-center text-primary">
-          <span class="loading loading-dots loading-lg"></span>
+          <LoaderIcon class="size-5"/>
         </div>
-      )}
+      )} */}
 
       {user ? (
         <div className="max-w-6xl mx-auto p-4 mt-6">
