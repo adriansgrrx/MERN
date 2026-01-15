@@ -33,22 +33,22 @@ const NoteDetailsPage = () => {
 
   console.log( {note} ) 
 
-  const handleDelete = async () => {
-    // e.preventDefault();
+  // const handleDelete = async () => {
+  //   // e.preventDefault();
 
-    if(!window.confirm("Are you sure you want to delete this note?")) return;
+  //   if(!window.confirm("Are you sure you want to delete this note?")) return;
 
-    try {
-        await api.delete(`/notes/${id}`); 
-        // setNotes((prev) => prev.filter(note => note._id !== id));
-        toast.success("Note deleted successfully.");
-        navigate("/");
+  //   try {
+  //       await api.delete(`/notes/${id}`); 
+  //       // setNotes((prev) => prev.filter(note => note._id !== id));
+  //       toast.success("Note deleted successfully.");
+  //       navigate("/");
 
-    } catch (error) {
-        console.log("Failed to delete note", error);
-        toast.error("Failed to delete the note.");
-    }
-  };
+  //   } catch (error) {
+  //       console.log("Failed to delete note", error);
+  //       toast.error("Failed to delete the note.");
+  //   }
+  // };
 
   const handleSave = async() => {
     if(!note.title.trim() || !note.content.trim()){
@@ -86,10 +86,10 @@ const NoteDetailsPage = () => {
               <ArrowLeftIcon className='size-4'/>
               Back to notes
             </Link>
-            <button onClick={handleDelete} className='btn btn-ghost text-error'>
+            {/* <button onClick={handleDelete} className='btn btn-ghost text-error'>
               <Trash2Icon className='h-4 w-4'/>
               Delete Note
-            </button>
+            </button> */}
           </div>
 
           <div className='card bg-base-100'>

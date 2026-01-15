@@ -65,7 +65,6 @@ const CreatePage = () => {
             <ArrowLeftIcon className='size-4'/>
             Back to notes
           </Link>
-
           <div className='card bg-base-100 font-mono'>
             <div className='card-body'>
               <div className='card-title text-2xl'>Create a New Note</div>
