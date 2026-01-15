@@ -1,11 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { PenSquareIcon, Trash } from 'lucide-react'
 import { formatDate } from '../lib/utils'
 import api from '../lib/axios'
 import toast from 'react-hot-toast'
 
 const NoteCard = ({note, setNotes}) => {
+    const navigate = useNavigate();
+    
+    const handleUpdate = async (e, id) => {
+        e.preventDefault();
+        navigate(`/note/${note._id}`)
+    };
+
+
     const handleDelete = async (e, id) => {
         e.preventDefault();
         
@@ -22,14 +30,14 @@ const NoteCard = ({note, setNotes}) => {
     };
 
     return (
-        <Link to={`/note/${note._id}`} className="card bg-base-200 hover:shadow-lg transition-all duration-200 border-t-4 border-solid border-primary">
+        <div className="card bg-base-200 hover:shadow-lg transition-all duration-200 border-t-4 border-solid border-primary">
             <div className='card-body font-mono'>
                 <h3 className='card-title text-base-content'>{note.title}</h3>
                 <p className='text-base-content/70 line-clamp-3'>{note.content}</p>
                 <div className='card-actions justify-between items-center mt-4'>
                     <span className='text-sm text-base-content'>{formatDate(new Date(note.createdAt))} </span>
                     <div className='flex items-center gap-1'>
-                        <button className='btn btn-ghost btn-xs'>
+                        <button className='btn btn-ghost btn-xs' onClick={handleUpdate}>
                             <PenSquareIcon className='size-4'/>
                         </button>
                         <button className='btn btn-ghost btn-xs text-error' onClick={(e) => handleDelete(e, note._id)}>
@@ -38,7 +46,7 @@ const NoteCard = ({note, setNotes}) => {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }
 
