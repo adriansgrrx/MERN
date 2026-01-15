@@ -8,6 +8,7 @@ import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
 import { Loader, LoaderIcon, X } from "lucide-react";
+import { formatDate, formatToUppercase } from "../lib/utils.js";
 
 const HomePage = ({ user, error, setUser }) => {
   const [isRateLimited, setIsRateLimited] = useState(false);
@@ -86,13 +87,14 @@ const HomePage = ({ user, error, setUser }) => {
               <div className="modal-box max-w-xl mx-auto font-mono">
                 {/* Close button (top-right) */}
                 <form method="dialog">
-                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                    <X/>
+                  <button className="btn btn-sm btn-circle btn-ghost absolute right-3 top-3">
+                    <X className="size-4"/>
                   </button>
                 </form>
 
                 {/* Note content */}
-                <h3 className="font-bold text-lg line-clamp-3">{selectedNote.title}</h3>
+                <span className='text-sm text-base-content text-start'>{formatDate(new Date(selectedNote.createdAt))} </span>
+                <h3 className="font-bold text-lg line-clamp-3 mt-2">{formatToUppercase(selectedNote.title)}</h3>
                 <p className="py-4 whitespace-pre-wrap line-clamp-3">
                   {selectedNote.content}
                 </p>

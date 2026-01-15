@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router'
 import { PenSquareIcon, Trash } from 'lucide-react'
-import { formatDate } from '../lib/utils'
+import { formatDate, formatToUppercase } from '../lib/utils'
 import api from '../lib/axios'
 import toast from 'react-hot-toast'
 
@@ -32,7 +32,7 @@ const NoteCard = ({note, setNotes, onOpen}) => {
     return (
         <div onClick={() => onOpen(note)} className="card bg-base-200 hover:shadow-lg transition-all duration-200">
             <div className='card-body font-mono'>
-                <h3 className='card-title text-base-content line-clamp-3'>{note.title}</h3>
+                <h3 className='card-title text-base-content line-clamp-3'>{formatToUppercase(note.title)}</h3>
                 <p className='text-base-content/70 line-clamp-3'>{note.content}</p>
                 <div className='card-actions justify-between items-center mt-4'>
                     <span className='text-sm text-base-content'>{formatDate(new Date(note.createdAt))} </span>

@@ -6,7 +6,7 @@ export function formatDate(date) {
     });
 }
 
-export function formatUsername(string) {
+export function formatToUppercase(string) {
   // Check if the string is empty or invalid to prevent errors
     if (typeof string !== 'string' || string.length === 0) {
         return '';
