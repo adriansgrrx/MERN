@@ -36,6 +36,42 @@ const HomePage = ({ user, error, setUser }) => {
     fetchNotes();
   }, []);
 
+  const handleDelete = async () => {
+    if (!window.confirm("Delete this note?")) return;
+
+    try {
+      await api.delete(`/notes/${selectedNote._id}`);
+      setNotes((prev) =>
+        prev.filter((n) => n._id !== selectedNote._id)
+      );
+
+      // Clear selectedNote first
+      setSelectedNote(null);
+
+      // Close modal in the next tick so React re-render happens first
+      setTimeout(() => {
+        const modal = document.getElementById("note_modal");
+        if (modal.open) modal.close();
+      }, 0);
+
+      toast.success("Note deleted successfully");
+    } catch (err) {
+      toast.error("Failed to delete note");
+    }
+  };
+
+  // Add this function to handle deletion from NoteCard
+  const handleNoteDeleted = (deletedNoteId) => {
+    // If the deleted note is currently selected in the modal, close the modal
+    if (selectedNote && selectedNote._id === deletedNoteId) {
+      setSelectedNote(null);
+      setTimeout(() => {
+        const modal = document.getElementById("note_modal");
+        if (modal?.open) modal.close();
+      }, 0);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-primary">
@@ -69,10 +105,16 @@ const HomePage = ({ user, error, setUser }) => {
           {!loading && notes.length > 0 && !isRateLimited && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300">
               {notes.map((note) => (
-                <NoteCard key={note._id} note={note} setNotes={setNotes} onOpen={(note) => {
-                  setSelectedNote(note);
-                  document.getElementById("note_modal").showModal();
-                }}/>
+                <NoteCard 
+                  key={note._id} 
+                  note={note} 
+                  setNotes={setNotes} 
+                  onOpen={(note) => {
+                    setSelectedNote(note);
+                    document.getElementById("note_modal").showModal();
+                  }}
+                  onDeleted={handleNoteDeleted}
+                />
               ))}
             </div>
           )}
@@ -112,18 +154,11 @@ const HomePage = ({ user, error, setUser }) => {
 
                   <button
                     className="btn btn-sm btn-error btn-outline"
-                    onClick={async () => {
-                      if (!window.confirm("Delete this note?")) return;
-
-                      await api.delete(`/notes/${selectedNote._id}`);
-                      setNotes((prev) =>
-                        prev.filter((n) => n._id !== selectedNote._id)
-                      );
-                      document.getElementById("note_modal").close();
-                    }}
+                    onClick={handleDelete}
                   >
                     Delete
                   </button>
+
                 </div>
               </div>
             )}

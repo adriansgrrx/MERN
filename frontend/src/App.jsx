@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
+  const [authLoading, setAuthLoading] = useState(true);
   // console.log(user);
 
   useEffect(() => {
