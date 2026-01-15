@@ -6,7 +6,7 @@ import NotesNotFound from "../components/NotesNotFound.jsx";
 import GetStarted from "../components/GetStarted.jsx";
 import api from "../lib/axios.js";
 import toast from "react-hot-toast";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Loader, LoaderIcon, X } from "lucide-react";
 
 const HomePage = ({ user, error, setUser }) => {
@@ -14,6 +14,8 @@ const HomePage = ({ user, error, setUser }) => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedNote, setSelectedNote] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -100,7 +102,7 @@ const HomePage = ({ user, error, setUser }) => {
                   <button
                     className="btn btn-sm btn-primary btn-outline"
                     onClick={() => {
-                      window.location.href = `/note/${selectedNote._id}`;
+                      navigate(`/note/${selectedNote._id}`);
                     }}
                   >
                     Edit

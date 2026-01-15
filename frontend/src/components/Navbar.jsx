@@ -14,7 +14,7 @@ const Navbar = ({ user, setUser }) => {
   };
 
   return (
-    <header className="bg-base-100 border-base-content/10">
+    <header className="bg-base-100 border-base-content/10 top-0 left-0 w-full z-50">
       <div className="mx-auto max-w-6xl px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex gap-2">
@@ -49,7 +49,8 @@ const Navbar = ({ user, setUser }) => {
 
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-primary/10 rounded-box w-44 mt-4"
+                  className="dropdown-content menu p-2 shadow-xl ring-1 ring-black/10 rounded-box w-44 mt-4 z-50"
+                  style={{backgroundColor: "#ECDCC4"}}
                 >
                   <li className="text-xs text-gray-500 px-2 py-1 mb-4">
                     {user.email}

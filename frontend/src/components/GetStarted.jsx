@@ -16,7 +16,7 @@ const GetStarted = () => {
                 <br />
             </p>
 
-            <div className="card bg-base-200 w-96 shadow-xl" onClick={() => document.getElementById('note_modal').showModal()}>
+            {/* <div className="card bg-base-100 w-96 shadow-xl" onClick={() => document.getElementById('note_modal').showModal()}>
                 <div className="card-body">
                     <h2 className="card-title">Shoes!</h2>
                     <p>If a dog chews shoes whose shoes does he choose?</p>
@@ -31,7 +31,7 @@ const GetStarted = () => {
                     <h3 className="font-bold text-lg">Hello!</h3>
                     <p className="py-4">Press ESC key or click on ✕ button to close</p>
                 </div>
-            </dialog>
+            </dialog> */}
         </div>
     );
 };
