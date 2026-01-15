@@ -7,12 +7,13 @@ import GetStarted from "../components/GetStarted.jsx";
 import api from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
-import { Loader, LoaderIcon } from "lucide-react";
+import { Loader, LoaderIcon, X } from "lucide-react";
 
 const HomePage = ({ user, error, setUser }) => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -65,7 +66,10 @@ const HomePage = ({ user, error, setUser }) => {
           {!loading && notes.length > 0 && !isRateLimited && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300">
               {notes.map((note) => (
-                <NoteCard key={note._id} note={note} setNotes={setNotes} />
+                <NoteCard key={note._id} note={note} setNotes={setNotes} onOpen={(note) => {
+                  setSelectedNote(note);
+                  document.getElementById("note_modal").showModal();
+                }}/>
               ))}
             </div>
           )}
@@ -74,6 +78,53 @@ const HomePage = ({ user, error, setUser }) => {
           {!loading && notes.length === 0 && !isRateLimited && (
             <NotesNotFound username={user.username} />
           )}
+
+          <dialog id="note_modal" className="modal">
+            {selectedNote && (
+              <div className="modal-box max-w-xl mx-auto font-mono">
+                {/* Close button (top-right) */}
+                <form method="dialog">
+                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    <X/>
+                  </button>
+                </form>
+
+                {/* Note content */}
+                <h3 className="font-bold text-lg line-clamp-3">{selectedNote.title}</h3>
+                <p className="py-4 whitespace-pre-wrap line-clamp-3">
+                  {selectedNote.content}
+                </p>
+
+                {/* Actions (bottom-right) */}
+                <div className="modal-action">
+                  <button
+                    className="btn btn-sm btn-primary btn-outline"
+                    onClick={() => {
+                      window.location.href = `/note/${selectedNote._id}`;
+                    }}
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    className="btn btn-sm btn-error btn-outline"
+                    onClick={async () => {
+                      if (!window.confirm("Delete this note?")) return;
+
+                      await api.delete(`/notes/${selectedNote._id}`);
+                      setNotes((prev) =>
+                        prev.filter((n) => n._id !== selectedNote._id)
+                      );
+                      document.getElementById("note_modal").close();
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </dialog>
+
         </div>
       ) : (
         /* NO loading UI here */

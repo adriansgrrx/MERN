@@ -1,5 +1,5 @@
 import React from "react";
-import { NotebookIcon } from "lucide-react";
+import { NotebookIcon, X } from "lucide-react";
 import { Link } from "react-router";
 
 const GetStarted = () => {
@@ -15,12 +15,23 @@ const GetStarted = () => {
                 account.
                 <br />
             </p>
-            {/* <Link
-                    to="/register"
-                    className="btn btn-primary btn-md text-sm md:text-md text-amber-100 font-medium font-mono gap-2 tracking-wide"
-                >
-                    Create Your First Note
-            </Link> */}
+
+            <div className="card bg-base-200 w-96 shadow-xl" onClick={() => document.getElementById('note_modal').showModal()}>
+                <div className="card-body">
+                    <h2 className="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                </div>
+            </div>
+
+            <dialog id="note_modal" className="modal">
+                <div className="modal-box">
+                    <form method="dialog">
+                        <X className="absolute right-2 top-2"/>
+                    </form>
+                    <h3 className="font-bold text-lg">Hello!</h3>
+                    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+                </div>
+            </dialog>
         </div>
     );
 };
