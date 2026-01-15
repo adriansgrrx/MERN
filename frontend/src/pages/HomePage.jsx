@@ -13,18 +13,15 @@ const HomePage = ({ user, error, setUser }) => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
-  // console.log(user);
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const res = await api.get("/notes");
-        console.log(res.data);
         setNotes(res.data);
         setIsRateLimited(false);
       } catch (error) {
-        console.log("Error fetching notes.", error);
-        if (error.response.status == 429) {
+        if (error.response?.status === 429) {
           setIsRateLimited(true);
         }
       } finally {
@@ -35,37 +32,51 @@ const HomePage = ({ user, error, setUser }) => {
     fetchNotes();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-primary">
+        <LoaderIcon className="size-6 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <Navbar user={user} setUser={setUser} />
 
       {isRateLimited && <RateLimitedUI />}
-
       {error && <p>{error}</p>}
-
-      {/* {loading && (
-        <div className="max-w-6xl mx-auto flex items-center justify-center text-primary">
-          <LoaderIcon class="size-5"/>
-        </div>
-      )} */}
 
       {user ? (
         <div className="max-w-6xl mx-auto p-4 mt-6">
-          {/* welcome, {user.username}, {user.email} */}
-          {notes.length > 0 && !isRateLimited && (
+          {/* Skeleton Loading — ONLY for logged-in users */}
+          {loading && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {notes.map((note) => (
-                <div>
-                  <NoteCard key={note._id} note={note} setNotes={setNotes} />
-                </div>
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-40 rounded-lg bg-muted animate-pulse"
+                />
               ))}
             </div>
           )}
-          {notes.length === 0 && !isRateLimited && !loading && (
+
+          {/* Notes */}
+          {!loading && notes.length > 0 && !isRateLimited && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300">
+              {notes.map((note) => (
+                <NoteCard key={note._id} note={note} setNotes={setNotes} />
+              ))}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!loading && notes.length === 0 && !isRateLimited && (
             <NotesNotFound username={user.username} />
           )}
         </div>
       ) : (
+        /* NO loading UI here */
         <div className="max-w-6xl mx-auto p-4 mt-6">
           <GetStarted />
         </div>
